@@ -18,15 +18,19 @@ public class Profesores {
 	public ArrayList<Clases> getImparte() {
 		return imparte;
 	}
+	
+	public void addClase(Clases c) {
+		imparte.add(c);
+	}
 
 	private void muestraImparte() {
 		for (Clases clase : imparte) {
-			System.out.println("\t\t" + clase);
+			System.out.println("- " + clase);
 		}
 	}
 
 	public void imprimeDatos() {
-		System.out.println("Profesor:\n\t- Nombre: " + nombre + "\n\t- Imparte:");
+		System.out.println("Profesor " + nombre + "\nImparte:");
 		muestraImparte();
 	}
 
