@@ -66,9 +66,9 @@ public class Clases {
 		}
 	}
 
-	public Clases copyClases(Clases clase) {
+	public Clases copyClases() {
 		try {
-			return new Clases(clase.nombre, clase.nivel, clase.precio);
+			return new Clases(nombre, nivel, precio);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

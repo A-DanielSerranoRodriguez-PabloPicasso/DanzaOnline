@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import models.Alumnos;
 
 public class LauncherView {
+	private int posi;
+
 	private JFrame frame;
 	private Box hbTitle;
 	private Component hgTitle_1;
@@ -301,27 +303,27 @@ public class LauncherView {
 
 		vsRegister_1 = Box.createVerticalStrut(10);
 		registerPanel.add(vsRegister_1);
-		
+
 		hbRegisterPhone = Box.createHorizontalBox();
 		registerPanel.add(hbRegisterPhone);
-		
+
 		hgRegisterPhone_1 = Box.createHorizontalGlue();
 		hbRegisterPhone.add(hgRegisterPhone_1);
-		
+
 		lblRegisterPhone = new JLabel("Telefono");
 		hbRegisterPhone.add(lblRegisterPhone);
-		
+
 		hsRegisterPhone = Box.createHorizontalStrut(110);
 		hbRegisterPhone.add(hsRegisterPhone);
-		
+
 		txtRegisterPhone = new JTextField();
 		txtRegisterPhone.setMaximumSize(new Dimension(100, 25));
 		txtRegisterPhone.setColumns(20);
 		hbRegisterPhone.add(txtRegisterPhone);
-		
+
 		hgRegisterPhone_2 = Box.createHorizontalGlue();
 		hbRegisterPhone.add(hgRegisterPhone_2);
-		
+
 		vsRegister_2 = Box.createVerticalStrut(10);
 		registerPanel.add(vsRegister_2);
 
@@ -471,6 +473,14 @@ public class LauncherView {
 			}
 		});
 
+		txtRegisterPhone.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+
 		pwfRegisterPasswd.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -496,8 +506,8 @@ public class LauncherView {
 
 	private void login() {
 		if (loginCheck(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()))) {
-			// TODO lanzar nueva vista pasando el usuario
-//			frame.dispose();
+			frame.dispose();
+			new MainView(utils.Almacen.alumnos.get(posi));
 		} else {
 			JFrame wrongCredentials = new JFrame();
 			JOptionPane.showMessageDialog(wrongCredentials, "Datos incorrectos");
@@ -505,16 +515,21 @@ public class LauncherView {
 	}
 
 	private boolean loginCheck(String name, String passwd) {
-		for (Alumnos alumno : utils.Almacen.alumnos)
+		int i = 0;
+		for (Alumnos alumno : utils.Almacen.alumnos) {
 			if (alumno.getName().equals(name))
-				if (alumno.getPasswd().equals(passwd))
+				if (alumno.getPasswd().equals(passwd)) {
+					posi = i;
 					return true;
+				}
+			i++;
+		}
 		return false;
 	}
 
 	private void register() {
 		if (registerCheck(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-				new String(pwfRegisterConfPass.getPassword()))) {
+				new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText())) {
 			txtLoginName.setText(txtRegisterName.getText());
 			utils.Almacen.alumnos
 					.add(new Alumnos(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()), 0));
@@ -522,7 +537,7 @@ public class LauncherView {
 		}
 	}
 
-	private boolean registerCheck(String name, String passwd, String confirmPasswd) {
+	private boolean registerCheck(String name, String passwd, String confirmPasswd, String phone) {
 		for (Alumnos alumno : utils.Almacen.alumnos)
 			if (alumno.getName().equals(name)) {
 				JFrame nameExists = new JFrame();
@@ -530,12 +545,23 @@ public class LauncherView {
 				return false;
 			}
 
-		if (!passwd.isEmpty() && !confirmPasswd.isEmpty() && name.isEmpty())
-			if (passwd.equals(confirmPasswd))
-				return true;
-			else {
-				JFrame wrongPasswd = new JFrame();
-				JOptionPane.showMessageDialog(wrongPasswd, "Las contraseñas no coinciden");
+		if (!passwd.isEmpty() && !confirmPasswd.isEmpty() && !name.isEmpty() && !phone.isEmpty())
+			if (phone.length() == 9) {
+				for (int i = 0; i < phone.length(); i++)
+					if (Character.isLetter(phone.charAt(i))) {
+						JFrame badPhone = new JFrame();
+						JOptionPane.showMessageDialog(badPhone, "Telefono erroneo");
+						return false;
+					}
+				if (passwd.equals(confirmPasswd))
+					return true;
+				else {
+					JFrame wrongPasswd = new JFrame();
+					JOptionPane.showMessageDialog(wrongPasswd, "Las contraseñas no coinciden");
+				}
+			} else {
+				JFrame badPhone = new JFrame();
+				JOptionPane.showMessageDialog(badPhone, "Telefono erroneo");
 			}
 		else {
 			JFrame emptyField = new JFrame();
