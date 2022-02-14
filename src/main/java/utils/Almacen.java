@@ -14,7 +14,9 @@ public class Almacen {
 
 	public static void rellenarClasesDisponibles() {
 		for (int i = 0; i < profesores.size(); i++)
-			for (Clases clases : profesores.get(i).getImparte())
+			for (Clases clases : profesores.get(i).getImparte()) {
+				clases.setProfesor(profesores.get(i));
 				clasesDisponibles.add(clases);
+			}
 	}
 }

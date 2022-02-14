@@ -29,27 +29,12 @@ public class Generic_Clases<E> extends ArrayList<E> {
 	}
 
 	/**
-	 * @deprecated Function not allowed for this list.
-	 */
-	@Override
-	public void clear() {
-	}
-
-	/**
+	 * @return
 	 * @deprecated Function not allowed for this list.
 	 */
 	@Override
 	public E remove(int i) {
 		return null;
-	}
-
-	/**
-	 * @return
-	 * @deprecated Function not allowed for this list.
-	 */
-	@Override
-	public boolean remove(Object o) {
-		return false;
 	}
 
 	/**

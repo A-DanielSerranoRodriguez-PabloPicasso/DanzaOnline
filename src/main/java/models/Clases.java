@@ -4,7 +4,8 @@ public class Clases {
 	private String nombre;
 	private int nivel;
 	private double precio;
-	private boolean completada;
+	private boolean participando, completada;
+	private Profesores profesor;
 
 	public Clases(String nombre, int nivel, double precio) throws Exception {
 		this.nombre = nombre;
@@ -15,7 +16,9 @@ public class Clases {
 		else
 			this.nivel = nivel;
 		this.precio = precio;
+		this.participando = false;
 		this.completada = false;
+		this.profesor = null;
 	}
 
 	public String getNombre() {
@@ -42,6 +45,14 @@ public class Clases {
 		this.precio = precio;
 	}
 
+	public boolean isParticipando() {
+		return participando;
+	}
+
+	public void setParticipando(boolean participando) {
+		this.participando = participando;
+	}
+
 	public boolean isCompletada() {
 		return completada;
 	}
@@ -50,7 +61,15 @@ public class Clases {
 		this.completada = completada;
 	}
 
-	private String getNombreNivel() {
+	public Profesores getProfesor() {
+		return profesor;
+	}
+
+	public void setProfesor(Profesores profesor) {
+		this.profesor = profesor;
+	}
+
+	public String getNombreNivel() {
 		switch (nivel) {
 		case 1:
 			return "Basico";
@@ -77,6 +96,7 @@ public class Clases {
 
 	@Override
 	public String toString() {
-		return "Clase de " + nombre + ":\n\t- Nivel: " + getNombreNivel() + "\n\t- Precio de " + precio + "€";
+		return "Clase de " + nombre + ":\n\t-Nivel: " + getNombreNivel() + "\n\t-Precio de " + precio
+				+ "€\n\t-Profesor: " + getProfesor().getNombre();
 	}
 }

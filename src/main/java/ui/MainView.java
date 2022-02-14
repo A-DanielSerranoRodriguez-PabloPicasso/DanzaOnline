@@ -2,21 +2,26 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
-import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import models.Alumnos;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import models.Clases;
 
 public class MainView {
 	private Alumnos usuario;
@@ -52,8 +57,6 @@ public class MainView {
 	private JPanel panelTeacherClass;
 	private JButton btnBack;
 	private JButton btnFront;
-	private JButton backClass;
-	private JButton frontClass;
 	private Component vsDinamic_2;
 	private Box hbButtons;
 	private JPanel panelTeachers;
@@ -77,6 +80,14 @@ public class MainView {
 	private Component vgTeacherDesc_3;
 	private JPanel panelClasses;
 	private Component verticalStrut;
+	private JPanel panelUserClasses;
+	private JPanel panelTopClass;
+	private Box horizontalBox;
+	private Component hgTopActive_1;
+	private JLabel lblActualClass;
+	private Component hgTopActive_2;
+	private JButton btnReturn;
+	private JPanel panelTheClasses;
 
 	/**
 	 * Create the application.
@@ -278,7 +289,33 @@ public class MainView {
 		vgTeacherDesc_3 = Box.createVerticalGlue();
 		panelTeacherDesc.add(vgTeacherDesc_3);
 
-		createTeachers();
+		panelUserClasses = new JPanel();
+		frame.getContentPane().add(panelUserClasses, "name_29523138366773");
+		panelUserClasses.setLayout(new BorderLayout(0, 0));
+
+		panelTopClass = new JPanel();
+		panelUserClasses.add(panelTopClass, BorderLayout.NORTH);
+
+		horizontalBox = Box.createHorizontalBox();
+		panelTopClass.add(horizontalBox);
+
+		hgTopActive_1 = Box.createHorizontalGlue();
+		horizontalBox.add(hgTopActive_1);
+
+		lblActualClass = new JLabel("");
+		horizontalBox.add(lblActualClass);
+
+		hgTopActive_2 = Box.createHorizontalGlue();
+		horizontalBox.add(hgTopActive_2);
+
+		panelTheClasses = new JPanel();
+		panelUserClasses.add(panelTheClasses, BorderLayout.CENTER);
+		panelTheClasses.setLayout(new BoxLayout(panelTheClasses, BoxLayout.Y_AXIS));
+
+		btnReturn = new JButton("back");
+		panelUserClasses.add(btnReturn, BorderLayout.EAST);
+
+		mainTeachers();
 	}
 
 	private void setUIbehaviour() {
@@ -286,9 +323,9 @@ public class MainView {
 			public void actionPerformed(ActionEvent e) {
 				actualPage++;
 				if (lblTitle.getText().equals("Profesores"))
-					createTeachers();
+					mainTeachers();
 				else
-					createClasses();
+					mainClasses();
 			}
 		});
 
@@ -296,9 +333,9 @@ public class MainView {
 			public void actionPerformed(ActionEvent e) {
 				actualPage--;
 				if (lblTitle.getText().equals("Profesores"))
-					createTeachers();
+					mainTeachers();
 				else
-					createClasses();
+					mainClasses();
 			}
 		});
 
@@ -311,7 +348,7 @@ public class MainView {
 				panelClasses.setVisible(false);
 				lblTitle.setText("Profesores");
 
-				createTeachers();
+				mainTeachers();
 			}
 		});
 
@@ -323,12 +360,44 @@ public class MainView {
 				lblTitle.setText("Clases");
 				panelTeachers.setVisible(false);
 				panelClasses.setVisible(true);
-				createClasses();
+				mainClasses();
+			}
+		});
+
+		btnActualClass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblActualClass.setText("Clases activas");
+				panelUserClasses.setVisible(true);
+				panelMain.setVisible(false);
+				actualPage = 0;
+				userClasses();
+			}
+		});
+
+		btnCompletedClass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblActualClass.setText("Clases completadas");
+				panelUserClasses.setVisible(true);
+				panelMain.setVisible(false);
+				actualPage = 0;
+				userClasses();
+			}
+		});
+
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelUserClasses.setVisible(false);
+				panelMain.setVisible(true);
+				actualPage = 0;
+				if (lblTitle.getText().equals("Profesores"))
+					mainTeachers();
+				else
+					mainClasses();
 			}
 		});
 	}
 
-	private void createTeachers() {
+	private void mainTeachers() {
 		panelTeachers.removeAll();
 
 		for (int i = actualPage * 4; i < ((actualPage + 1) * 4); i++) {
@@ -342,29 +411,95 @@ public class MainView {
 				panelTeachers.add(Box.createVerticalGlue());
 			}
 		}
-		updateText();
+		updateMainText();
 	}
 
-	private void createClasses() {
+	private void mainClasses() {
 		panelClasses.removeAll();
 
-		panelClasses.add(Box.createVerticalStrut(20));
-
 		for (int i = actualPage * 4; i < ((actualPage + 1) * 4); i++) {
-			if (i < utils.Almacen.clases.size()) {
+			if (i < utils.Almacen.clasesDisponibles.size()) {
+				int id = i;
 				Box hbDinamic = Box.createHorizontalBox();
-				JLabel dinamic = new JLabel(utils.Almacen.clases.get(i).getNombre());
+				hbDinamic.setBorder(BorderFactory.createLineBorder(Color.black));
+				JLabel dinamic = new JLabel(utils.Almacen.clasesDisponibles.get(i).getNombre() + "    Nivel: "
+						+ utils.Almacen.clasesDisponibles.get(i).getNombreNivel() + "    Precio: "
+						+ utils.Almacen.clasesDisponibles.get(i).getPrecio() + "€    Profesor: "
+						+ utils.Almacen.clasesDisponibles.get(i).getProfesor().getNombre());
+				JCheckBox chkDinamic = new JCheckBox();
+				if (utils.Almacen.clasesDisponibles.get(i).isParticipando())
+					chkDinamic.setSelected(true);
+
+				chkDinamic.addItemListener(new ItemListener() {
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
+							if (usuario.getClasesActuales().addClaseActual(utils.Almacen.clasesDisponibles.get(id)))
+								utils.Almacen.clasesDisponibles.get(id).setParticipando(true);
+							else
+								chkDinamic.setSelected(false);
+						} else {// checkbox has been deselected
+							usuario.getClasesActuales().remove(utils.Almacen.clasesDisponibles.get(id));
+							utils.Almacen.clasesDisponibles.get(id).setParticipando(false);
+						}
+					}
+				});
+
 				panelClasses.add(hbDinamic);
-				hbDinamic.add(Box.createHorizontalGlue());
+				hbDinamic.add(Box.createHorizontalStrut(20));
 				hbDinamic.add(dinamic);
-				hbDinamic.add(Box.createHorizontalGlue());
+				hbDinamic.add(chkDinamic);
+				hbDinamic.add(Box.createHorizontalStrut(20));
 				panelClasses.add(Box.createVerticalGlue());
 			}
 		}
-		updateText();
+		updateMainText();
 	}
 
-	private void updateText() {
+	private void userClasses() {
+		panelTheClasses.removeAll();
+		if (lblActualClass.getText().equals("Clases activas"))
+			for (int i = actualPage * 4; i < ((actualPage + 1) * 4); i++) {
+				if (i < usuario.getClasesActuales().size()) {
+					Clases clase = usuario.getClasesActuales().get(i);
+					Box hbDinamic = Box.createHorizontalBox();
+					hbDinamic.setBorder(BorderFactory.createLineBorder(Color.black));
+					JLabel dinamic = new JLabel(usuario.getClasesActuales().get(i).getNombre() + "    Nivel: "
+							+ usuario.getClasesActuales().get(i).getNombreNivel() + "    Precio: "
+							+ usuario.getClasesActuales().get(i).getPrecio() + "€    Profesor: "
+							+ usuario.getClasesActuales().get(i).getProfesor().getNombre());
+					JCheckBox chkDinamic = new JCheckBox();
+					if (usuario.getClasesActuales().get(i).isParticipando())
+						chkDinamic.setSelected(true);
+
+					chkDinamic.addItemListener(new ItemListener() {
+						@Override
+						public void itemStateChanged(ItemEvent e) {
+							if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
+								if (usuario.getClasesActuales().addClaseActual(clase))
+									clase.setParticipando(true);
+								else
+									chkDinamic.setSelected(false);
+							} else {// checkbox has been deselected
+								usuario.getClasesActuales().remove(clase);
+								clase.setParticipando(false);
+							}
+						}
+					});
+
+					panelTheClasses.add(hbDinamic);
+					hbDinamic.add(Box.createHorizontalStrut(20));
+					hbDinamic.add(dinamic);
+					hbDinamic.add(chkDinamic);
+					hbDinamic.add(Box.createHorizontalStrut(20));
+					panelTheClasses.add(Box.createVerticalGlue());
+				}
+			}
+		else if (lblActualClass.getText().equals("Clases completadas"))
+			System.out.println("hell");
+	}
+
+	private void updateMainText() {
 		if (actualPage > 0)
 			btnBack.setVisible(true);
 		else
@@ -376,17 +511,16 @@ public class MainView {
 		else
 			lblPagina.setText("Página " + (actualPage + 1) + " de "
 					+ (int) (Math.ceil(utils.Almacen.clases.size() / (double) 4)));
-		
+
 		if (lblTitle.getText().equals("Profesores"))
 			if ((actualPage + 1) * 4 < utils.Almacen.profesores.size())
 				btnFront.setVisible(true);
 			else
 				btnFront.setVisible(false);
+		else if ((actualPage + 1) * 4 < utils.Almacen.clases.size())
+			btnFront.setVisible(true);
 		else
-			if ((actualPage + 1) * 4 < utils.Almacen.clases.size())
-				btnFront.setVisible(true);
-			else
-				btnFront.setVisible(false);
+			btnFront.setVisible(false);
 
 		frame.repaint();
 	}
