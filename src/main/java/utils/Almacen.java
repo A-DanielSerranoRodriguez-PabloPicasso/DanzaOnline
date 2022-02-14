@@ -10,4 +10,11 @@ public class Almacen {
 	public static ArrayList<Alumnos> alumnos = new ArrayList<>();
 	public static ArrayList<Profesores> profesores = new ArrayList<>();
 	public static ArrayList<Clases> clases = new ArrayList<>();
+	public static ArrayList<Clases> clasesDisponibles = new ArrayList<>();
+
+	public static void rellenarClasesDisponibles() {
+		for (int i = 0; i < profesores.size(); i++)
+			for (Clases clases : profesores.get(i).getImparte())
+				clasesDisponibles.add(clases);
+	}
 }
