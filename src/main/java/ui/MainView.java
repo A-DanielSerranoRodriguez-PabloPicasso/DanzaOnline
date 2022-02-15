@@ -111,6 +111,8 @@ public class MainView {
 	private JLabel lblNombre;
 	private JLabel lblContra;
 	private JLabel lblTlfn;
+	private Component vgPanelUser_3;
+	private JButton btnExit;
 
 	/**
 	 * Create the application.
@@ -200,7 +202,7 @@ public class MainView {
 		vsPanelUser_1 = Box.createVerticalStrut(20);
 		vbPanelUser.add(vsPanelUser_1);
 
-		btnConfig = new JButton("Configuración");
+		btnConfig = new JButton("Configuracion");
 		btnConfig.setMargin(new Insets(2, 24, 2, 24));
 		vbPanelUser.add(btnConfig);
 
@@ -213,6 +215,13 @@ public class MainView {
 
 		vgPanelUser_2 = Box.createVerticalGlue();
 		vbPanelUser.add(vgPanelUser_2);
+
+		btnExit = new JButton("Salir");
+		btnExit.setMargin(new Insets(2, 45, 2, 45));
+		vbPanelUser.add(btnExit);
+
+		vgPanelUser_3 = Box.createVerticalGlue();
+		vbPanelUser.add(vgPanelUser_3);
 
 		hsPanelUser_1 = Box.createHorizontalStrut(20);
 		panelUser.add(hsPanelUser_1);
@@ -410,6 +419,13 @@ public class MainView {
 	}
 
 	private void setUIbehaviour() {
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				new LauncherView();
+			}
+		});
+
 		btnFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actualPage++;
@@ -514,6 +530,9 @@ public class MainView {
 		});
 	}
 
+	/**
+	 * Inserts all the teachers in their panel dynamically
+	 */
 	private void mainTeachers() {
 		panelTeachers.removeAll();
 
@@ -525,8 +544,8 @@ public class MainView {
 				Box hbDinamic_2 = Box.createHorizontalBox();
 				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				JLabel dinamic_1 = new JLabel(prof.getNombre());
-				JLabel dinamic_2 = new JLabel("Nivel medio: " + prof.getNivelMedio() + "    Precio medio: " + prof.getPrecioMedio()
-						+ "€");
+				JLabel dinamic_2 = new JLabel(
+						"Nivel medio: " + prof.getNivelMedio() + "    Precio medio: " + prof.getPrecioMedio() + "€");
 
 				panelTeachers.add(vbDinamic);
 				vbDinamic.add(hbDinamic_1);
@@ -544,6 +563,9 @@ public class MainView {
 		updateMainText();
 	}
 
+	/**
+	 * Inserts all the classes in their panel dynamically
+	 */
 	private void mainClasses() {
 		panelClasses.removeAll();
 
@@ -555,8 +577,8 @@ public class MainView {
 				Box hbDinamic_2 = Box.createHorizontalBox();
 				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				JLabel dinamic_1 = new JLabel(clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
-				JLabel dinamic_2 = new JLabel("Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio()
-						+ "€" + "    Participar: ");
+				JLabel dinamic_2 = new JLabel(
+						"Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio() + "    Participar: ");
 				JCheckBox chkDinamic = new JCheckBox();
 				if (clase.isParticipando())
 					chkDinamic.setSelected(true);
@@ -565,12 +587,18 @@ public class MainView {
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
-							if (usuario.getClases().addClaseActual(clase))
+							if (usuario.getClases().addClaseActual(clase.copyClases())) {
 								clase.setParticipando(true);
-							else
+								for (Clases c : usuario.getClases())
+									if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
+										c.setParticipando(true);
+							} else
 								chkDinamic.setSelected(false);
 						} else {// checkbox has been deselected
-							usuario.getClases().remove(clase);
+							for (int i = 0; i < usuario.getClases().size(); i++)
+								if (usuario.getClases().get(i).getNombre() == clase.getNombre()
+										&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
+									usuario.getClases().remove(i);
 							clase.setParticipando(false);
 						}
 						updateMainText();
@@ -595,6 +623,9 @@ public class MainView {
 		updateMainText();
 	}
 
+	/**
+	 * Inserts all the classes in their panel dynamically
+	 */
 	private void userActualClasses() {
 		panelTheClasses.removeAll();
 		if (lblActualClass.getText().equals("Clases activas"))
@@ -608,7 +639,7 @@ public class MainView {
 					JLabel dinamic_1 = new JLabel(
 							clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
 					JLabel dinamic_2 = new JLabel("Nivel: " + clase.getNombreNivel() + "    Precio: "
-							+ clase.getPrecio() + "€" + "    Participando: ");
+							+ clase.getPrecio() + "    Participando: ");
 					JCheckBox chkDinamic = new JCheckBox();
 					if (clase.isParticipando())
 						chkDinamic.setSelected(true);
@@ -617,12 +648,18 @@ public class MainView {
 						@Override
 						public void itemStateChanged(ItemEvent e) {
 							if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
-								if (usuario.getClases().addClaseActual(clase))
+								if (usuario.getClases().addClaseActual(clase.copyClases())) {
 									clase.setParticipando(true);
-								else
+									for (Clases c : usuario.getClases())
+										if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
+											c.setParticipando(true);
+								} else
 									chkDinamic.setSelected(false);
 							} else {// checkbox has been deselected
-								usuario.getClases().remove(clase);
+								for (int i = 0; i < usuario.getClases().size(); i++)
+									if (usuario.getClases().get(i).getNombre() == clase.getNombre()
+											&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
+										usuario.getClases().remove(i);
 								clase.setParticipando(false);
 							}
 						}
@@ -649,6 +686,9 @@ public class MainView {
 		updateClassText();
 	}
 
+	/**
+	 * Updates the classes and teachers view
+	 */
 	private void updateMainText() {
 		if (actualPage > 0)
 			btnBack.setVisible(true);
@@ -680,6 +720,9 @@ public class MainView {
 		frame.repaint();
 	}
 
+	/**
+	 * Updates the view of the users classes
+	 */
 	private void updateClassText() {
 		if (actualPage > 0)
 			btnClassBack.setVisible(true);

@@ -221,7 +221,7 @@ public class LauncherView {
 		hgLoginPasswd_1 = Box.createHorizontalGlue();
 		hbLoginPasswd.add(hgLoginPasswd_1);
 
-		lblLoginPasswd = new JLabel("Contraseña");
+		lblLoginPasswd = new JLabel("Contrasenya");
 		hbLoginPasswd.add(lblLoginPasswd);
 
 		hsLoginPasswd = Box.createHorizontalStrut(20);
@@ -333,7 +333,7 @@ public class LauncherView {
 		hgRegisterPasswd_1 = Box.createHorizontalGlue();
 		hbRegisterPasswd.add(hgRegisterPasswd_1);
 
-		lblRegisterPasswd = new JLabel("Contraseña");
+		lblRegisterPasswd = new JLabel("Contrasenya");
 		hbRegisterPasswd.add(lblRegisterPasswd);
 
 		hsRegisterPasswd = Box.createHorizontalStrut(90);
@@ -356,7 +356,7 @@ public class LauncherView {
 		hgRegisterConfPass_1 = Box.createHorizontalGlue();
 		hbRegisterConfPass.add(hgRegisterConfPass_1);
 
-		lblRegisterConfPass = new JLabel("Confirmar contraseña");
+		lblRegisterConfPass = new JLabel("Confirmar Contrasenya");
 		hbRegisterConfPass.add(lblRegisterConfPass);
 
 		hsRegisterConfPass = Box.createHorizontalStrut(20);

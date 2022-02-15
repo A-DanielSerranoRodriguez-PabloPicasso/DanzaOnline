@@ -4,7 +4,7 @@ public class Clases {
 	private String nombre;
 	private int nivel;
 	private double precio;
-	private boolean participando, completada;
+	private boolean participando;
 	private Profesores profesor;
 
 	public Clases(String nombre, int nivel, double precio) throws Exception {
@@ -17,7 +17,6 @@ public class Clases {
 			this.nivel = nivel;
 		this.precio = precio;
 		this.participando = false;
-		this.completada = false;
 		this.profesor = null;
 	}
 
@@ -53,14 +52,6 @@ public class Clases {
 		this.participando = participando;
 	}
 
-	public boolean isCompletada() {
-		return completada;
-	}
-
-	public void setCompletada(boolean completada) {
-		this.completada = completada;
-	}
-
 	public Profesores getProfesor() {
 		return profesor;
 	}
@@ -85,9 +76,17 @@ public class Clases {
 		}
 	}
 
+	/**
+	 * Gives us a copy of the classes
+	 * 
+	 * @return Object 'Clases'
+	 */
 	public Clases copyClases() {
 		try {
-			return new Clases(nombre, nivel, precio);
+			Clases c = new Clases(nombre, nivel, precio);
+			c.participando = this.participando;
+			c.profesor = this.profesor;
+			return c;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,6 +96,6 @@ public class Clases {
 	@Override
 	public String toString() {
 		return "Clase de " + nombre + ":\n\t-Nivel: " + getNombreNivel() + "\n\t-Precio de " + precio
-				+ "€\n\t-Profesor: " + getProfesor().getNombre();
+				+ "\n\t-Profesor: " + getProfesor().getNombre();
 	}
 }

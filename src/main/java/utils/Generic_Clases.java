@@ -33,15 +33,6 @@ public class Generic_Clases<E> extends ArrayList<E> {
 	 * @deprecated Function not allowed for this list.
 	 */
 	@Override
-	public E remove(int i) {
-		return null;
-	}
-
-	/**
-	 * @return
-	 * @deprecated Function not allowed for this list.
-	 */
-	@Override
 	public boolean removeAll(Collection<?> c) {
 		return false;
 	}
