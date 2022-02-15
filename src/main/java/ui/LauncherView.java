@@ -531,8 +531,8 @@ public class LauncherView {
 		if (registerCheck(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
 				new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText())) {
 			txtLoginName.setText(txtRegisterName.getText());
-			utils.Almacen.alumnos
-					.add(new Alumnos(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()), 0));
+			utils.Almacen.alumnos.add(new Alumnos(txtRegisterName.getText(),
+					new String(pwfRegisterPasswd.getPassword()), Integer.parseInt(txtRegisterPhone.getText())));
 			exitRegister();
 		}
 	}

@@ -6,7 +6,6 @@ public class Alumnos {
 	private String name, passwd;
 	private int tlfn;
 	private Generic_Clases<Clases> clasesActuales;
-	private Generic_Clases<Clases> clasesCompletadas;
 	private boolean permiteClases;
 
 	public Alumnos(String name, String passwd, int tlfn) {
@@ -14,7 +13,6 @@ public class Alumnos {
 		this.passwd = passwd;
 		this.tlfn = tlfn;
 		this.clasesActuales = new Generic_Clases<>();
-		this.clasesCompletadas = new Generic_Clases<>();
 		this.permiteClases = true;
 	}
 
@@ -42,12 +40,8 @@ public class Alumnos {
 		this.tlfn = tlfn;
 	}
 
-	public Generic_Clases<Clases> getClasesActuales() {
+	public Generic_Clases<Clases> getClases() {
 		return clasesActuales;
-	}
-
-	public Generic_Clases<Clases> getClasesAlmacen() {
-		return clasesCompletadas;
 	}
 
 	public boolean getPermiteClases() {
