@@ -10,51 +10,27 @@ public class MainApp {
 		for (int i = 0; i < 22; i++) {
 			switch ((int) (Math.random() * 6)) {
 			case 0:
-				try {
-					utils.Almacen.clases.add(new Clases("Salsa", 3, 59.99));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				utils.Almacen.clases.add(new Clases("Salsa", 3, 59.99));
 				break;
 
 			case 1:
-				try {
-					utils.Almacen.clases.add(new Clases("Tacon", 2, 39.99));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				utils.Almacen.clases.add(new Clases("Tacon", 2, 39.99));
 				break;
 
 			case 2:
-				try {
-					utils.Almacen.clases.add(new Clases("El robot", 1, 9.99));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				utils.Almacen.clases.add(new Clases("El robot", 1, 9.99));
 				break;
 
 			case 3:
-				try {
-					utils.Almacen.clases.add(new Clases("Free style", 2, 89.99));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				utils.Almacen.clases.add(new Clases("Free style", 2, 89.99));
 				break;
 
 			case 4:
-				try {
-					utils.Almacen.clases.add(new Clases("La conga", 1, 4.99));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				utils.Almacen.clases.add(new Clases("La conga", 1, 4.99));
 				break;
 
 			case 5:
-				try {
-					utils.Almacen.clases.add(new Clases("Flamenco", 3, 44.99));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				utils.Almacen.clases.add(new Clases("Flamenco", 3, 44.99));
 				break;
 			}
 		}
@@ -69,9 +45,9 @@ public class MainApp {
 		for (int i = 0; i < 22; i++)
 			utils.Almacen.profesores.get((int) ((Math.random() * utils.Almacen.profesores.size()))).addClase(
 					utils.Almacen.clases.get((int) ((Math.random() * utils.Almacen.clases.size()))).copyClases());
-		
+
 		utils.Almacen.rellenarClasesDisponibles();
-		
+
 		new LauncherView();
 	}
 

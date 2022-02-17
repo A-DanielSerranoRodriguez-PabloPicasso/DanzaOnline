@@ -421,7 +421,7 @@ public class LauncherView {
 		btnLogin.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
@@ -429,7 +429,7 @@ public class LauncherView {
 		txtLoginName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
@@ -437,7 +437,7 @@ public class LauncherView {
 		pwfLoginPasswd.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
@@ -454,52 +454,52 @@ public class LauncherView {
 		btnRegisterConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
+						new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
 		btnRegisterConfirm.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
+							new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
 		txtRegisterName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
+							new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
 		txtRegisterPhone.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
+							new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
 		pwfRegisterPasswd.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
+							new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
 		pwfRegisterConfPass.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+				if (isEnterKey(e))
 					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
+							new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -510,7 +510,23 @@ public class LauncherView {
 		});
 	}
 
-	private void login(String name, String passwd) {
+	/**
+	 * Checks if the key that has been pressed is the ENTER key
+	 * 
+	 * @param e KeyEvent
+	 * @return True or false
+	 */
+	public boolean isEnterKey(KeyEvent e) {
+		return e.getKeyCode() == KeyEvent.VK_ENTER;
+	}
+
+	/**
+	 * Logs in the user to the application
+	 * 
+	 * @param name   String representing the name of the user
+	 * @param passwd String representing the password of the user
+	 */
+	public void login(String name, String passwd) {
 		if (loginCheck(name, passwd)) {
 			frame.dispose();
 			new MainView(utils.Almacen.alumnos.get(posi));
@@ -520,7 +536,14 @@ public class LauncherView {
 		}
 	}
 
-	private boolean loginCheck(String name, String passwd) {
+	/**
+	 * Checks that the user exists and that the password matches the user's
+	 * 
+	 * @param name   String representing the name of the user
+	 * @param passwd String representing the password of the user
+	 * @return True or false
+	 */
+	public boolean loginCheck(String name, String passwd) {
 		int i = 0;
 		for (Alumnos alumno : utils.Almacen.alumnos) {
 			if (alumno.getName().equals(name))
@@ -533,7 +556,15 @@ public class LauncherView {
 		return false;
 	}
 
-	private void register(String name, String passwd, String chkPasswd, String phone) {
+	/**
+	 * Registers the user into the "database"
+	 * 
+	 * @param name          String representing the name of the user
+	 * @param passwd        String representing the password of the user
+	 * @param confirmPasswd String representing the password confirmation
+	 * @param phone         String representing the phone of the user
+	 */
+	public void register(String name, String passwd, String chkPasswd, String phone) {
 		if (registerCheck(name, passwd, chkPasswd, phone)) {
 			txtLoginName.setText(txtRegisterName.getText());
 			utils.Almacen.alumnos.add(new Alumnos(name, passwd, Integer.parseInt(phone)));
@@ -541,7 +572,17 @@ public class LauncherView {
 		}
 	}
 
-	private boolean registerCheck(String name, String passwd, String confirmPasswd, String phone) {
+	/**
+	 * Checks that the user input is correct, checking if the fields have content,
+	 * user doesn't exists, phone format is correct and passwords match
+	 * 
+	 * @param name          String representing the name of the user
+	 * @param passwd        String representing the password of the user
+	 * @param confirmPasswd String representing the password confirmation
+	 * @param phone         String representing the phone of the user
+	 * @return True or false
+	 */
+	public boolean registerCheck(String name, String passwd, String confirmPasswd, String phone) {
 		for (Alumnos alumno : utils.Almacen.alumnos)
 			if (alumno.getName().equals(name)) {
 				JFrame nameExists = new JFrame();
@@ -574,7 +615,10 @@ public class LauncherView {
 		return false;
 	}
 
-	private void exitRegister() {
+	/**
+	 * Exits the register panel to the login panel
+	 */
+	public void exitRegister() {
 		registerPanel.setVisible(false);
 		loginPanel.setVisible(true);
 		txtRegisterName.setText("");

@@ -26,7 +26,7 @@ import models.Profesores;
 
 public class MainView {
 	private Alumnos usuario;
-	private int actualPage = 0;
+	private int page = 0;
 
 	private JFrame frame;
 	private JPanel panelTitle;
@@ -421,24 +421,19 @@ public class MainView {
 	private void setUIbehaviour() {
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				new LauncherView();
+				exit();
 			}
 		});
 
 		btnFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actualPage++;
-				if (lblTitle.getText().equals("Profesores"))
-					mainTeachers();
-				else
-					mainClasses();
+				nextPage();
 			}
 		});
 
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actualPage--;
+				page--;
 				if (lblTitle.getText().equals("Profesores"))
 					mainTeachers();
 				else
@@ -448,21 +443,21 @@ public class MainView {
 
 		btnClassFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actualPage++;
+				page++;
 				userActualClasses();
 			}
 		});
 
 		btnClassBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actualPage--;
+				page--;
 				userActualClasses();
 			}
 		});
 
 		btnProfs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actualPage = 0;
+				page = 0;
 				btnProfs.setEnabled(false);
 				btnClases.setEnabled(true);
 				panelTeachers.setVisible(true);
@@ -475,7 +470,7 @@ public class MainView {
 
 		btnClases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actualPage = 0;
+				page = 0;
 				btnProfs.setEnabled(true);
 				btnClases.setEnabled(false);
 				lblTitle.setText("Clases");
@@ -504,7 +499,7 @@ public class MainView {
 				lblActualClass.setText("Clases activas");
 				panelUserClasses.setVisible(true);
 				panelMain.setVisible(false);
-				actualPage = 0;
+				page = 0;
 				userActualClasses();
 			}
 		});
@@ -513,7 +508,7 @@ public class MainView {
 			public void actionPerformed(ActionEvent e) {
 				panelUserClasses.setVisible(false);
 				panelMain.setVisible(true);
-				actualPage = 0;
+				page = 0;
 				if (lblTitle.getText().equals("Profesores"))
 					mainTeachers();
 				else
@@ -533,10 +528,10 @@ public class MainView {
 	/**
 	 * Inserts all the teachers in their panel dynamically
 	 */
-	private void mainTeachers() {
+	public void mainTeachers() {
 		panelTeachers.removeAll();
 
-		for (int i = actualPage * 4; i < ((actualPage + 1) * 4); i++) {
+		for (int i = page * 4; i < ((page + 1) * 4); i++) {
 			if (i < utils.Almacen.profesores.size()) {
 				Profesores prof = utils.Almacen.profesores.get(i);
 				Box vbDinamic = Box.createVerticalBox();
@@ -545,7 +540,7 @@ public class MainView {
 				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				JLabel dinamic_1 = new JLabel(prof.getNombre());
 				JLabel dinamic_2 = new JLabel(
-						"Nivel medio: " + prof.getNivelMedio() + "    Precio medio: " + prof.getPrecioMedio() + "€");
+						"Nivel medio: " + prof.getNivelMedio() + "    Precio medio: " + prof.getPrecioMedio());
 
 				panelTeachers.add(vbDinamic);
 				vbDinamic.add(hbDinamic_1);
@@ -566,10 +561,10 @@ public class MainView {
 	/**
 	 * Inserts all the classes in their panel dynamically
 	 */
-	private void mainClasses() {
+	public void mainClasses() {
 		panelClasses.removeAll();
 
-		for (int i = actualPage * 4; i < ((actualPage + 1) * 4); i++) {
+		for (int i = page * 4; i < ((page + 1) * 4); i++) {
 			if (i < utils.Almacen.clasesDisponibles.size()) {
 				Clases clase = utils.Almacen.clasesDisponibles.get(i);
 				Box vbDinamic = Box.createVerticalBox();
@@ -584,21 +579,24 @@ public class MainView {
 					chkDinamic.setSelected(true);
 
 				chkDinamic.addItemListener(new ItemListener() {
+					// Regressed to previous version. TODO multiuser capabilities
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
-							if (usuario.getClases().addClaseActual(clase.copyClases())) {
+//							if (usuario.getClases().addClaseActual(clase.copyClases())) {
+							if (usuario.getClases().addClaseActual(clase)) {
 								clase.setParticipando(true);
-								for (Clases c : usuario.getClases())
-									if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
-										c.setParticipando(true);
+//								for (Clases c : usuario.getClases())
+//									if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
+//										c.setParticipando(true);
 							} else
 								chkDinamic.setSelected(false);
 						} else {// checkbox has been deselected
-							for (int i = 0; i < usuario.getClases().size(); i++)
-								if (usuario.getClases().get(i).getNombre() == clase.getNombre()
-										&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
-									usuario.getClases().remove(i);
+							usuario.getClases().remove(clase);
+//							for (int i = 0; i < usuario.getClases().size(); i++)
+//								if (usuario.getClases().get(i).getNombre() == clase.getNombre()
+//										&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
+//									usuario.getClases().remove(i);
 							clase.setParticipando(false);
 						}
 						updateMainText();
@@ -626,62 +624,62 @@ public class MainView {
 	/**
 	 * Inserts all the classes in their panel dynamically
 	 */
-	private void userActualClasses() {
+	public void userActualClasses() {
 		panelTheClasses.removeAll();
-		if (lblActualClass.getText().equals("Clases activas"))
-			for (int i = actualPage * 4; i < ((actualPage + 1) * 4); i++) {
-				if (i < usuario.getClases().size()) {
-					Clases clase = usuario.getClases().get(i);
-					Box vbDinamic = Box.createVerticalBox();
-					Box hbDinamic_1 = Box.createHorizontalBox();
-					Box hbDinamic_2 = Box.createHorizontalBox();
-					vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					JLabel dinamic_1 = new JLabel(
-							clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
-					JLabel dinamic_2 = new JLabel("Nivel: " + clase.getNombreNivel() + "    Precio: "
-							+ clase.getPrecio() + "    Participando: ");
-					JCheckBox chkDinamic = new JCheckBox();
-					if (clase.isParticipando())
-						chkDinamic.setSelected(true);
+		for (int i = page * 4; i < ((page + 1) * 4); i++) {
+			if (i < usuario.getClases().size()) {
+				Clases clase = usuario.getClases().get(i);
+				Box vbDinamic = Box.createVerticalBox();
+				Box hbDinamic_1 = Box.createHorizontalBox();
+				Box hbDinamic_2 = Box.createHorizontalBox();
+				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				JLabel dinamic_1 = new JLabel(clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
+				JLabel dinamic_2 = new JLabel(
+						"Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio() + "    Participando: ");
+				JCheckBox chkDinamic = new JCheckBox();
+				if (clase.isParticipando())
+					chkDinamic.setSelected(true);
 
-					chkDinamic.addItemListener(new ItemListener() {
-						@Override
-						public void itemStateChanged(ItemEvent e) {
-							if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
-								if (usuario.getClases().addClaseActual(clase.copyClases())) {
-									clase.setParticipando(true);
-									for (Clases c : usuario.getClases())
-										if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
-											c.setParticipando(true);
-								} else
-									chkDinamic.setSelected(false);
-							} else {// checkbox has been deselected
-								for (int i = 0; i < usuario.getClases().size(); i++)
-									if (usuario.getClases().get(i).getNombre() == clase.getNombre()
-											&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
-										usuario.getClases().remove(i);
-								clase.setParticipando(false);
-							}
+				chkDinamic.addItemListener(new ItemListener() {
+					// Regressed to previous version. TODO multiuser capabilities
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
+//								if (usuario.getClases().addClaseActual(clase.copyClases())) {
+							if (usuario.getClases().addClaseActual(clase)) {
+								clase.setParticipando(true);
+//									for (Clases c : usuario.getClases())
+//										if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
+//											c.setParticipando(true);
+							} else
+								chkDinamic.setSelected(false);
+						} else {// checkbox has been deselected
+							usuario.getClases().remove(clase);
+//								for (int i = 0; i < usuario.getClases().size(); i++)
+//									if (usuario.getClases().get(i).getNombre() == clase.getNombre()
+//											&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
+//										usuario.getClases().remove(i);
+							clase.setParticipando(false);
 						}
-					});
+						updateClassText();
+					}
+				});
 
-					panelTheClasses.add(vbDinamic);
-					vbDinamic.add(hbDinamic_1);
-					vbDinamic.add(Box.createVerticalStrut(5));
-					vbDinamic.add(hbDinamic_2);
-					hbDinamic_1.add(Box.createHorizontalStrut(20));
-					hbDinamic_1.add(dinamic_1);
-					hbDinamic_1.add(Box.createHorizontalStrut(20));
-					hbDinamic_2.add(Box.createHorizontalStrut(20));
-					hbDinamic_2.add(dinamic_2);
-					hbDinamic_2.add(Box.createHorizontalStrut(5));
-					hbDinamic_2.add(chkDinamic);
-					hbDinamic_2.add(Box.createHorizontalStrut(20));
-					panelTheClasses.add(Box.createVerticalGlue());
-				}
+				panelTheClasses.add(vbDinamic);
+				vbDinamic.add(hbDinamic_1);
+				vbDinamic.add(Box.createVerticalStrut(5));
+				vbDinamic.add(hbDinamic_2);
+				hbDinamic_1.add(Box.createHorizontalStrut(20));
+				hbDinamic_1.add(dinamic_1);
+				hbDinamic_1.add(Box.createHorizontalStrut(20));
+				hbDinamic_2.add(Box.createHorizontalStrut(20));
+				hbDinamic_2.add(dinamic_2);
+				hbDinamic_2.add(Box.createHorizontalStrut(5));
+				hbDinamic_2.add(chkDinamic);
+				hbDinamic_2.add(Box.createHorizontalStrut(20));
+				panelTheClasses.add(Box.createVerticalGlue());
 			}
-		else if (lblActualClass.getText().equals("Clases completadas"))
-			System.out.println("hell");
+		}
 
 		updateClassText();
 	}
@@ -689,18 +687,18 @@ public class MainView {
 	/**
 	 * Updates the classes and teachers view
 	 */
-	private void updateMainText() {
-		if (actualPage > 0)
+	public void updateMainText() {
+		if (page > 0)
 			btnBack.setVisible(true);
 		else
 			btnBack.setVisible(false);
 
 		if (lblTitle.getText().equals("Profesores"))
-			lblPagina.setText("Página " + (actualPage + 1) + " de "
-					+ (int) (Math.ceil(utils.Almacen.profesores.size() / (double) 4)));
+			lblPagina.setText(
+					"Pagina " + (page + 1) + " de " + (int) (Math.ceil(utils.Almacen.profesores.size() / (double) 4)));
 		else
-			lblPagina.setText("Página " + (actualPage + 1) + " de "
-					+ (int) (Math.ceil(utils.Almacen.clases.size() / (double) 4)));
+			lblPagina.setText(
+					"Pagina " + (page + 1) + " de " + (int) (Math.ceil(utils.Almacen.clases.size() / (double) 4)));
 
 		if (usuario.getClases().size() == 0)
 			btnClasesActivas.setEnabled(false);
@@ -708,11 +706,11 @@ public class MainView {
 			btnClasesActivas.setEnabled(true);
 
 		if (lblTitle.getText().equals("Profesores"))
-			if ((actualPage + 1) * 4 < utils.Almacen.profesores.size())
+			if ((page + 1) * 4 < utils.Almacen.profesores.size())
 				btnFront.setVisible(true);
 			else
 				btnFront.setVisible(false);
-		else if ((actualPage + 1) * 4 < utils.Almacen.clases.size())
+		else if ((page + 1) * 4 < utils.Almacen.clases.size())
 			btnFront.setVisible(true);
 		else
 			btnFront.setVisible(false);
@@ -723,17 +721,58 @@ public class MainView {
 	/**
 	 * Updates the view of the users classes
 	 */
-	private void updateClassText() {
-		if (actualPage > 0)
+	public void updateClassText() {
+		if (page > 0)
 			btnClassBack.setVisible(true);
 		else
 			btnClassBack.setVisible(false);
 
-		if ((actualPage + 1) * 4 < usuario.getClases().size())
+		if ((page + 1) * 4 < usuario.getClases().size())
 			btnClassFront.setVisible(true);
 		else
 			btnClassFront.setVisible(false);
 
 		frame.repaint();
 	}
+
+	/**
+	 * Closes the application
+	 */
+	public void exit() {
+		frame.dispose();
+		new LauncherView();
+	}
+
+	/**
+	 * Checks if the text matches "Profesores"
+	 * 
+	 * @param text String to check
+	 * @return True or false
+	 */
+	public boolean checkMainText(String text) {
+		return text.equals("Profesores");
+	}
+
+	/**
+	 * Increments the page counter and updates the text in the view
+	 */
+	public void nextPage() {
+		page++;
+		if (checkMainText(lblTitle.getText()))
+			mainTeachers();
+		else
+			mainClasses();
+	}
+
+	/**
+	 * Decrements the page counter and updates the text in te view
+	 */
+	public void previousPage() {
+		page--;
+		if (checkMainText(lblTitle.getText()))
+			mainTeachers();
+		else
+			mainClasses();
+	}
+
 }

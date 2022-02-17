@@ -7,14 +7,9 @@ public class Clases {
 	private boolean participando;
 	private Profesores profesor;
 
-	public Clases(String nombre, int nivel, double precio) throws Exception {
+	public Clases(String nombre, int nivel, double precio) {
 		this.nombre = nombre;
-		if (nivel > 3)
-			throw new IndexOutOfBoundsException("El nivel de la clase ha de ser menor o igual que 3");
-		else if (nivel < 1)
-			throw new IndexOutOfBoundsException("El nivel de la clase ha de ser mayor o igual que 1");
-		else
-			this.nivel = nivel;
+		this.nivel = nivel;
 		this.precio = precio;
 		this.participando = false;
 		this.profesor = null;
