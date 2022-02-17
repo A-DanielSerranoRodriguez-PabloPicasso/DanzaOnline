@@ -414,7 +414,7 @@ public class LauncherView {
 		// LoginPanel
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				login();
+				login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
 
@@ -422,7 +422,7 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					login();
+					login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
 
@@ -430,7 +430,7 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					login();
+					login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
 
@@ -438,7 +438,7 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					login();
+					login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
 
@@ -453,7 +453,8 @@ public class LauncherView {
 		// RegisterPanel
 		btnRegisterConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				register();
+				register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
+						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -461,7 +462,8 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					register();
+					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
+						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -469,7 +471,8 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					register();
+					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
+						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -477,7 +480,8 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					register();
+					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
+						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -485,7 +489,8 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					register();
+					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
+						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -493,7 +498,8 @@ public class LauncherView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					register();
+					register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
+						 new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText());
 			}
 		});
 
@@ -504,8 +510,8 @@ public class LauncherView {
 		});
 	}
 
-	private void login() {
-		if (loginCheck(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()))) {
+	private void login(String name, String passwd) {
+		if (loginCheck(name, passwd)) {
 			frame.dispose();
 			new MainView(utils.Almacen.alumnos.get(posi));
 		} else {
@@ -527,12 +533,10 @@ public class LauncherView {
 		return false;
 	}
 
-	private void register() {
-		if (registerCheck(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
-				new String(pwfRegisterConfPass.getPassword()), txtRegisterPhone.getText())) {
+	private void register(String name, String passwd, String chkPasswd, String phone) {
+		if (registerCheck(name, passwd, chkPasswd, phone)) {
 			txtLoginName.setText(txtRegisterName.getText());
-			utils.Almacen.alumnos.add(new Alumnos(txtRegisterName.getText(),
-					new String(pwfRegisterPasswd.getPassword()), Integer.parseInt(txtRegisterPhone.getText())));
+			utils.Almacen.alumnos.add(new Alumnos(name, passwd, Integer.parseInt(phone)));
 			exitRegister();
 		}
 	}
@@ -544,7 +548,7 @@ public class LauncherView {
 				JOptionPane.showMessageDialog(nameExists, "El usuario ya existe");
 				return false;
 			}
-
+		// Comment this IF for testing
 		if (!passwd.isEmpty() && !confirmPasswd.isEmpty() && !name.isEmpty() && !phone.isEmpty())
 			if (phone.length() == 9) {
 				for (int i = 0; i < phone.length(); i++)
