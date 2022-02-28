@@ -1,5 +1,6 @@
 package mainApp;
 
+import models.Alumnos;
 import models.Clases;
 import models.Profesores;
 import ui.LauncherView;
@@ -47,6 +48,8 @@ public class MainApp {
 					utils.Almacen.clases.get((int) ((Math.random() * utils.Almacen.clases.size()))).copyClases());
 
 		utils.Almacen.rellenarClasesDisponibles();
+		
+		utils.Almacen.alumnos.add(new Alumnos("d", "d", 123456789));
 
 		new LauncherView();
 	}

@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import models.Alumnos;
@@ -575,6 +576,14 @@ public class MainView {
 				JLabel dinamic_2 = new JLabel(
 						"Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio() + "    Participar: ");
 				JCheckBox chkDinamic = new JCheckBox();
+				chkDinamic.setVisible(false);
+				JButton btnDinamic = new JButton("Comprar");
+
+				if (clase.isComprada()) {
+					chkDinamic.setVisible(true);
+					btnDinamic.setVisible(false);
+				}
+
 				if (clase.isParticipando())
 					chkDinamic.setSelected(true);
 
@@ -603,6 +612,31 @@ public class MainView {
 					}
 				});
 
+				btnDinamic.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JPanel selTipoPago = new JPanel();
+						String[] pagos = { "Tarjeta de credito", "Bizum", "Cancelar" };
+						int option = JOptionPane.showOptionDialog(selTipoPago, "Como quieres pagar?",
+								"Estación de pago", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+								null, pagos, pagos[2]);
+						// Possible TODO, separate information pages, not just straight up pay
+						switch (option) {
+						case 0:
+
+						case 1:
+							clase.setComprada(true);
+							btnDinamic.setVisible(false);
+							chkDinamic.setVisible(true);
+							break;
+
+						case 2:
+							break;
+						}
+
+					}
+				});
+
 				panelClasses.add(vbDinamic);
 				vbDinamic.add(hbDinamic_1);
 				vbDinamic.add(Box.createVerticalStrut(5));
@@ -614,6 +648,7 @@ public class MainView {
 				hbDinamic_2.add(dinamic_2);
 				hbDinamic_2.add(Box.createHorizontalStrut(5));
 				hbDinamic_2.add(chkDinamic);
+				hbDinamic_2.add(btnDinamic);
 				hbDinamic_2.add(Box.createHorizontalStrut(20));
 				panelClasses.add(Box.createVerticalGlue());
 			}
@@ -637,6 +672,7 @@ public class MainView {
 				JLabel dinamic_2 = new JLabel(
 						"Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio() + "    Participando: ");
 				JCheckBox chkDinamic = new JCheckBox();
+
 				if (clase.isParticipando())
 					chkDinamic.setSelected(true);
 
@@ -765,7 +801,7 @@ public class MainView {
 	}
 
 	/**
-	 * Decrements the page counter and updates the text in te view
+	 * Decrements the page counter and updates the text in the view
 	 */
 	public void previousPage() {
 		page--;

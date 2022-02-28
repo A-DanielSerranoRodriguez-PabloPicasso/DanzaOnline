@@ -4,13 +4,14 @@ public class Clases {
 	private String nombre;
 	private int nivel;
 	private double precio;
-	private boolean participando;
+	private boolean participando, comprada;
 	private Profesores profesor;
 
 	public Clases(String nombre, int nivel, double precio) {
 		this.nombre = nombre;
 		this.nivel = nivel;
 		this.precio = precio;
+		this.comprada = false;
 		this.participando = false;
 		this.profesor = null;
 	}
@@ -45,6 +46,14 @@ public class Clases {
 
 	public void setParticipando(boolean participando) {
 		this.participando = participando;
+	}
+
+	public boolean isComprada() {
+		return comprada;
+	}
+
+	public void setComprada(boolean comprada) {
+		this.comprada = comprada;
 	}
 
 	public Profesores getProfesor() {
