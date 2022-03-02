@@ -452,68 +452,43 @@ public class MainView {
 
 		btnProfs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				page = 0;
-				btnProfs.setEnabled(false);
-				btnClases.setEnabled(true);
-				panelTeachers.setVisible(true);
-				panelClasses.setVisible(false);
-				lblTitle.setText("Profesores");
-				mainTeachers();
+				chngToProfs();
 			}
 		});
 
 		btnClases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				page = 0;
-				btnProfs.setEnabled(true);
-				btnClases.setEnabled(false);
-				lblTitle.setText("Clases");
-				panelTeachers.setVisible(false);
-				panelClasses.setVisible(true);
-				mainClasses();
+				chngToClasses();
 			}
 		});
 
 		btnConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelMain.setVisible(false);
-				panelConfig.setVisible(true);
+				goToConf();
 			}
 		});
 
 		btnReturnFromConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelMain.setVisible(true);
-				panelConfig.setVisible(false);
+				returnFromConf();
 			}
 		});
 
 		btnClasesActivas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblActualClass.setText("Clases activas");
-				panelUserClasses.setVisible(true);
-				panelMain.setVisible(false);
-				page = 0;
-				userActualClasses();
+				goToActiveClasses();
 			}
 		});
 
 		btnReturnFromClass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelUserClasses.setVisible(false);
-				panelMain.setVisible(true);
-				page = 0;
-				if (lblTitle.getText().equals("Profesores"))
-					mainTeachers();
-				else
-					mainClasses();
+				returnFromActiveClasses();
 			}
 		});
 
 		btnBorrarCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				new LauncherView();
+				deleteUser();
 			}
 		});
 	}
@@ -708,7 +683,6 @@ public class MainView {
 				panelTheClasses.add(Box.createVerticalGlue());
 			}
 		}
-
 		updateClassText();
 	}
 
@@ -761,6 +735,72 @@ public class MainView {
 			btnClassFront.setVisible(false);
 
 		frame.repaint();
+	}
+
+	/**
+	 * Shows the teachers
+	 */
+	public void chngToProfs() {
+		page = 0;
+		btnProfs.setEnabled(false);
+		btnClases.setEnabled(true);
+		panelTeachers.setVisible(true);
+		panelClasses.setVisible(false);
+		lblTitle.setText("Profesores");
+		mainTeachers();
+	}
+
+	/**
+	 * Shows the classes
+	 */
+	public void chngToClasses() {
+		page = 0;
+		btnProfs.setEnabled(true);
+		btnClases.setEnabled(false);
+		lblTitle.setText("Clases");
+		panelTeachers.setVisible(false);
+		panelClasses.setVisible(true);
+		mainClasses();
+	}
+
+	/**
+	 * Shows the users configuration page
+	 */
+	public void goToConf() {
+		panelMain.setVisible(false);
+		panelConfig.setVisible(true);
+	}
+
+	/**
+	 * Returns from the users configuration page
+	 */
+	public void returnFromConf() {
+		panelMain.setVisible(true);
+		panelConfig.setVisible(false);
+	}
+
+	/**
+	 * Shows the active classes of the users
+	 */
+	public void goToActiveClasses() {
+		lblActualClass.setText("Clases activas");
+		panelUserClasses.setVisible(true);
+		panelMain.setVisible(false);
+		page = 0;
+		userActualClasses();
+	}
+
+	/**
+	 * Returns from the active classes
+	 */
+	public void returnFromActiveClasses() {
+		panelUserClasses.setVisible(false);
+		panelMain.setVisible(true);
+		page = 0;
+		if (lblTitle.getText().equals("Profesores"))
+			mainTeachers();
+		else
+			mainClasses();
 	}
 
 	/**
@@ -824,6 +864,8 @@ public class MainView {
 	 */
 	public void deleteUser() {
 		utils.Almacen.alumnos.remove(usuario);
+		frame.dispose();
+		new LauncherView();
 	}
 
 }

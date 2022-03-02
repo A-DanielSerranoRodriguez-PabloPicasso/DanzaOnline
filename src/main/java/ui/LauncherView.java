@@ -444,9 +444,7 @@ public class LauncherView {
 
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				loginPanel.setVisible(false);
-				registerPanel.setVisible(true);
-				lblSubTitle.setText("Introduzca sus datos");
+				enterRegister();
 			}
 		});
 
@@ -616,6 +614,17 @@ public class LauncherView {
 	}
 
 	/**
+	 * Enters the register panel
+	 */
+	public void enterRegister() {
+		loginPanel.setVisible(false);
+		registerPanel.setVisible(true);
+		txtLoginName.setText("");
+		pwfLoginPasswd.setText("");
+		lblSubTitle.setText("Introduzca sus datos");
+	}
+
+	/**
 	 * Exits the register panel to the login panel
 	 */
 	public void exitRegister() {
@@ -625,5 +634,46 @@ public class LauncherView {
 		pwfRegisterPasswd.setText("");
 		pwfRegisterConfPass.setText("");
 		lblSubTitle.setText("Inicie sesion para continuar");
+	}
+
+	/**
+	 * Returns the panels of the application
+	 * 
+	 * @return Array of JPanel (loginPanel, registerPanel)
+	 */
+	public JPanel[] getPanels() {
+		JPanel[] panels = { loginPanel, registerPanel };
+		return panels;
+	}
+
+	/**
+	 * Returns the subtitle text
+	 * 
+	 * @return String
+	 */
+	public String getSubTitle() {
+		return lblSubTitle.getText();
+	}
+
+	/**
+	 * Return the login text-fields texts
+	 * 
+	 * @return Array of String (loginName, loginPasswd)
+	 */
+	public String[] getLoginTexts() {
+		String[] texts = { txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()) };
+		return texts;
+	}
+
+	/**
+	 * Return the register text-fields texts
+	 * 
+	 * @return Array of String (registerName, registerPhone, registerPasswd,
+	 *         registerConfirmPasswd)
+	 */
+	public String[] getRegisterTexts() {
+		String[] texts = { txtRegisterName.getText(), txtRegisterPhone.getText(),
+				new String(pwfRegisterPasswd.getPassword()), new String(pwfRegisterConfPass.getPassword()) };
+		return texts;
 	}
 }
