@@ -57,27 +57,12 @@ public class MainView {
 	private JPanel panelTeacherClass;
 	private JButton btnBack;
 	private JButton btnFront;
-	private Component vsDinamic_2;
+	private Component vsdynamic_2;
 	private Box hbButtons;
 	private JPanel panelTeachers;
 	private JLabel lblPagina;
-	private Component vsDinamic_1;
+	private Component vsdynamic_1;
 	private JPanel panelShow;
-	private JPanel panelTeacherInfo;
-	private JPanel panelTeacherDesc;
-	private Component vgTeacherDesc_1;
-	private Box hbTeacherDesc_1;
-	private Component ghHBDesc_1;
-	private JLabel lblMayorClase;
-	private Component ghHBDesc_2;
-	private Component vgTeacherDesc_2;
-	private JLabel lblClass;
-	private Box hbTeacherDesc_2;
-	private Component ghHBDesc_3;
-	private JLabel lblDiff;
-	private JLabel lblMediaDiff;
-	private Component ghHBDesc_4;
-	private Component vgTeacherDesc_3;
 	private JPanel panelClasses;
 	private Component verticalStrut;
 	private JPanel panelUserClasses;
@@ -231,8 +216,8 @@ public class MainView {
 		panelMain.add(panelTeacherClass, BorderLayout.CENTER);
 		panelTeacherClass.setLayout(new BoxLayout(panelTeacherClass, BoxLayout.Y_AXIS));
 
-		vsDinamic_1 = Box.createVerticalStrut(35);
-		panelTeacherClass.add(vsDinamic_1);
+		vsdynamic_1 = Box.createVerticalStrut(35);
+		panelTeacherClass.add(vsdynamic_1);
 
 		hbButtons = Box.createHorizontalBox();
 		panelTeacherClass.add(hbButtons);
@@ -247,8 +232,8 @@ public class MainView {
 		hbButtons.add(Box.createHorizontalGlue());
 		hbButtons.add(btnFront = new JButton(">"));
 
-		vsDinamic_2 = Box.createVerticalStrut(35);
-		panelTeacherClass.add(vsDinamic_2);
+		vsdynamic_2 = Box.createVerticalStrut(35);
+		panelTeacherClass.add(vsdynamic_2);
 
 		panelShow = new JPanel();
 		panelTeacherClass.add(panelShow);
@@ -267,53 +252,6 @@ public class MainView {
 
 		verticalStrut = Box.createVerticalStrut(20);
 		panelClasses.add(verticalStrut);
-
-		panelTeacherInfo = new JPanel();
-		frame.getContentPane().add(panelTeacherInfo, "name_23448689962911");
-		panelTeacherInfo.setLayout(new BorderLayout(0, 0));
-
-		panelTeacherDesc = new JPanel();
-		panelTeacherInfo.add(panelTeacherDesc, BorderLayout.WEST);
-		panelTeacherDesc.setLayout(new BoxLayout(panelTeacherDesc, BoxLayout.Y_AXIS));
-
-		vgTeacherDesc_1 = Box.createVerticalGlue();
-		panelTeacherDesc.add(vgTeacherDesc_1);
-
-		hbTeacherDesc_1 = Box.createHorizontalBox();
-		panelTeacherDesc.add(hbTeacherDesc_1);
-
-		ghHBDesc_1 = Box.createHorizontalGlue();
-		hbTeacherDesc_1.add(ghHBDesc_1);
-
-		lblClass = new JLabel("Clase mas ofrecida:");
-		hbTeacherDesc_1.add(lblClass);
-
-		ghHBDesc_2 = Box.createHorizontalGlue();
-		hbTeacherDesc_1.add(ghHBDesc_2);
-
-		lblMayorClase = new JLabel("");
-		panelTeacherDesc.add(lblMayorClase);
-
-		vgTeacherDesc_2 = Box.createVerticalGlue();
-		panelTeacherDesc.add(vgTeacherDesc_2);
-
-		hbTeacherDesc_2 = Box.createHorizontalBox();
-		panelTeacherDesc.add(hbTeacherDesc_2);
-
-		ghHBDesc_3 = Box.createHorizontalGlue();
-		hbTeacherDesc_2.add(ghHBDesc_3);
-
-		lblDiff = new JLabel("Dificultad media:");
-		hbTeacherDesc_2.add(lblDiff);
-
-		ghHBDesc_4 = Box.createHorizontalGlue();
-		hbTeacherDesc_2.add(ghHBDesc_4);
-
-		lblMediaDiff = new JLabel("");
-		panelTeacherDesc.add(lblMediaDiff);
-
-		vgTeacherDesc_3 = Box.createVerticalGlue();
-		panelTeacherDesc.add(vgTeacherDesc_3);
 
 		panelUserClasses = new JPanel();
 		frame.getContentPane().add(panelUserClasses, "name_29523138366773");
@@ -502,24 +440,24 @@ public class MainView {
 		for (int i = page * 4; i < ((page + 1) * 4); i++) {
 			if (i < utils.Almacen.profesores.size()) {
 				Profesores prof = utils.Almacen.profesores.get(i);
-				Box vbDinamic = Box.createVerticalBox();
-				Box hbDinamic_1 = Box.createHorizontalBox();
-				Box hbDinamic_2 = Box.createHorizontalBox();
-				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				JLabel dinamic_1 = new JLabel(prof.getNombre());
-				JLabel dinamic_2 = new JLabel(
+				Box vbdynamic = Box.createVerticalBox();
+				Box hbdynamic_1 = Box.createHorizontalBox();
+				Box hbdynamic_2 = Box.createHorizontalBox();
+				vbdynamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				JLabel dynamic_1 = new JLabel(prof.getNombre());
+				JLabel dynamic_2 = new JLabel(
 						"Nivel medio: " + prof.getNivelMedio() + "    Precio medio: " + prof.getPrecioMedio());
 
-				panelTeachers.add(vbDinamic);
-				vbDinamic.add(hbDinamic_1);
-				vbDinamic.add(Box.createVerticalStrut(5));
-				vbDinamic.add(hbDinamic_2);
-				hbDinamic_1.add(Box.createHorizontalStrut(20));
-				hbDinamic_1.add(dinamic_1);
-				hbDinamic_1.add(Box.createHorizontalStrut(20));
-				hbDinamic_2.add(Box.createHorizontalStrut(20));
-				hbDinamic_2.add(dinamic_2);
-				hbDinamic_2.add(Box.createHorizontalStrut(20));
+				panelTeachers.add(vbdynamic);
+				vbdynamic.add(hbdynamic_1);
+				vbdynamic.add(Box.createVerticalStrut(5));
+				vbdynamic.add(hbdynamic_2);
+				hbdynamic_1.add(Box.createHorizontalStrut(20));
+				hbdynamic_1.add(dynamic_1);
+				hbdynamic_1.add(Box.createHorizontalStrut(20));
+				hbdynamic_2.add(Box.createHorizontalStrut(20));
+				hbdynamic_2.add(dynamic_2);
+				hbdynamic_2.add(Box.createHorizontalStrut(20));
 				panelTeachers.add(Box.createVerticalGlue());
 			}
 		}
@@ -535,26 +473,26 @@ public class MainView {
 		for (int i = page * 4; i < ((page + 1) * 4); i++) {
 			if (i < utils.Almacen.clasesDisponibles.size()) {
 				Clases clase = utils.Almacen.clasesDisponibles.get(i);
-				Box vbDinamic = Box.createVerticalBox();
-				Box hbDinamic_1 = Box.createHorizontalBox();
-				Box hbDinamic_2 = Box.createHorizontalBox();
-				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				JLabel dinamic_1 = new JLabel(clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
-				JLabel dinamic_2 = new JLabel(
+				Box vbdynamic = Box.createVerticalBox();
+				Box hbdynamic_1 = Box.createHorizontalBox();
+				Box hbdynamic_2 = Box.createHorizontalBox();
+				vbdynamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				JLabel dynamic_1 = new JLabel(clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
+				JLabel dynamic_2 = new JLabel(
 						"Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio() + "    Participar: ");
-				JCheckBox chkDinamic = new JCheckBox();
-				chkDinamic.setVisible(false);
-				JButton btnDinamic = new JButton("Comprar");
+				JCheckBox chkdynamic = new JCheckBox();
+				chkdynamic.setVisible(false);
+				JButton btndynamic = new JButton("Comprar");
 
 				if (clase.isComprada()) {
-					chkDinamic.setVisible(true);
-					btnDinamic.setVisible(false);
+					chkdynamic.setVisible(true);
+					btndynamic.setVisible(false);
 				}
 
 				if (clase.isParticipando())
-					chkDinamic.setSelected(true);
+					chkdynamic.setSelected(true);
 
-				chkDinamic.addItemListener(new ItemListener() {
+				chkdynamic.addItemListener(new ItemListener() {
 					// Regressed to previous version. TODO multiuser capabilities
 					@Override
 					public void itemStateChanged(ItemEvent e) {
@@ -566,7 +504,7 @@ public class MainView {
 //									if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
 //										c.setParticipando(true);
 							} else
-								chkDinamic.setSelected(false);
+								chkdynamic.setSelected(false);
 						} else {// checkbox has been deselected
 							usuario.getClases().remove(clase);
 //							for (int i = 0; i < usuario.getClases().size(); i++)
@@ -579,7 +517,7 @@ public class MainView {
 					}
 				});
 
-				btnDinamic.addActionListener(new ActionListener() {
+				btndynamic.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JPanel selTipoPago = new JPanel();
@@ -593,8 +531,8 @@ public class MainView {
 
 						case 1:
 							clase.setComprada(true);
-							btnDinamic.setVisible(false);
-							chkDinamic.setVisible(true);
+							btndynamic.setVisible(false);
+							chkdynamic.setVisible(true);
 							break;
 
 						case 2:
@@ -604,19 +542,19 @@ public class MainView {
 					}
 				});
 
-				panelClasses.add(vbDinamic);
-				vbDinamic.add(hbDinamic_1);
-				vbDinamic.add(Box.createVerticalStrut(5));
-				vbDinamic.add(hbDinamic_2);
-				hbDinamic_1.add(Box.createHorizontalStrut(20));
-				hbDinamic_1.add(dinamic_1);
-				hbDinamic_1.add(Box.createHorizontalStrut(20));
-				hbDinamic_2.add(Box.createHorizontalStrut(20));
-				hbDinamic_2.add(dinamic_2);
-				hbDinamic_2.add(Box.createHorizontalStrut(5));
-				hbDinamic_2.add(chkDinamic);
-				hbDinamic_2.add(btnDinamic);
-				hbDinamic_2.add(Box.createHorizontalStrut(20));
+				panelClasses.add(vbdynamic);
+				vbdynamic.add(hbdynamic_1);
+				vbdynamic.add(Box.createVerticalStrut(5));
+				vbdynamic.add(hbdynamic_2);
+				hbdynamic_1.add(Box.createHorizontalStrut(20));
+				hbdynamic_1.add(dynamic_1);
+				hbdynamic_1.add(Box.createHorizontalStrut(20));
+				hbdynamic_2.add(Box.createHorizontalStrut(20));
+				hbdynamic_2.add(dynamic_2);
+				hbdynamic_2.add(Box.createHorizontalStrut(5));
+				hbdynamic_2.add(chkdynamic);
+				hbdynamic_2.add(btndynamic);
+				hbdynamic_2.add(Box.createHorizontalStrut(20));
 				panelClasses.add(Box.createVerticalGlue());
 			}
 		}
@@ -631,19 +569,19 @@ public class MainView {
 		for (int i = page * 4; i < ((page + 1) * 4); i++) {
 			if (i < usuario.getClases().size()) {
 				Clases clase = usuario.getClases().get(i);
-				Box vbDinamic = Box.createVerticalBox();
-				Box hbDinamic_1 = Box.createHorizontalBox();
-				Box hbDinamic_2 = Box.createHorizontalBox();
-				vbDinamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				JLabel dinamic_1 = new JLabel(clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
-				JLabel dinamic_2 = new JLabel(
+				Box vbdynamic = Box.createVerticalBox();
+				Box hbdynamic_1 = Box.createHorizontalBox();
+				Box hbdynamic_2 = Box.createHorizontalBox();
+				vbdynamic.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				JLabel dynamic_1 = new JLabel(clase.getNombre() + "  -  Profesor: " + clase.getProfesor().getNombre());
+				JLabel dynamic_2 = new JLabel(
 						"Nivel: " + clase.getNombreNivel() + "    Precio: " + clase.getPrecio() + "    Participando: ");
-				JCheckBox chkDinamic = new JCheckBox();
+				JCheckBox chkdynamic = new JCheckBox();
 
 				if (clase.isParticipando())
-					chkDinamic.setSelected(true);
+					chkdynamic.setSelected(true);
 
-				chkDinamic.addItemListener(new ItemListener() {
+				chkdynamic.addItemListener(new ItemListener() {
 					// Regressed to previous version. TODO multiuser capabilities
 					@Override
 					public void itemStateChanged(ItemEvent e) {
@@ -655,7 +593,7 @@ public class MainView {
 //										if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
 //											c.setParticipando(true);
 							} else
-								chkDinamic.setSelected(false);
+								chkdynamic.setSelected(false);
 						} else {// checkbox has been deselected
 							usuario.getClases().remove(clase);
 //								for (int i = 0; i < usuario.getClases().size(); i++)
@@ -668,18 +606,18 @@ public class MainView {
 					}
 				});
 
-				panelTheClasses.add(vbDinamic);
-				vbDinamic.add(hbDinamic_1);
-				vbDinamic.add(Box.createVerticalStrut(5));
-				vbDinamic.add(hbDinamic_2);
-				hbDinamic_1.add(Box.createHorizontalStrut(20));
-				hbDinamic_1.add(dinamic_1);
-				hbDinamic_1.add(Box.createHorizontalStrut(20));
-				hbDinamic_2.add(Box.createHorizontalStrut(20));
-				hbDinamic_2.add(dinamic_2);
-				hbDinamic_2.add(Box.createHorizontalStrut(5));
-				hbDinamic_2.add(chkDinamic);
-				hbDinamic_2.add(Box.createHorizontalStrut(20));
+				panelTheClasses.add(vbdynamic);
+				vbdynamic.add(hbdynamic_1);
+				vbdynamic.add(Box.createVerticalStrut(5));
+				vbdynamic.add(hbdynamic_2);
+				hbdynamic_1.add(Box.createHorizontalStrut(20));
+				hbdynamic_1.add(dynamic_1);
+				hbdynamic_1.add(Box.createHorizontalStrut(20));
+				hbdynamic_2.add(Box.createHorizontalStrut(20));
+				hbdynamic_2.add(dynamic_2);
+				hbdynamic_2.add(Box.createHorizontalStrut(5));
+				hbdynamic_2.add(chkdynamic);
+				hbdynamic_2.add(Box.createHorizontalStrut(20));
 				panelTheClasses.add(Box.createVerticalGlue());
 			}
 		}
@@ -866,6 +804,92 @@ public class MainView {
 		utils.Almacen.alumnos.remove(usuario);
 		frame.dispose();
 		new LauncherView();
+	}
+
+	/**
+	 * Return the frame of the view
+	 * 
+	 * @return JFrame
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * Return the panels of the main view (panelMain, panelTeachers, panelClasses)
+	 * 
+	 * @return Array of JPanel
+	 */
+	public JPanel[] getMainPanels() {
+		JPanel[] panels = { panelMain, panelTeachers, panelClasses };
+		return panels;
+	}
+
+	/**
+	 * Return the panel of the users classes
+	 * 
+	 * @return JPanel
+	 */
+	public JPanel getUserPanel() {
+		return panelUserClasses;
+	}
+
+	/**
+	 * Return the panel of the user configuration
+	 * 
+	 * @return JPanel
+	 */
+	public JPanel getConfigPanel() {
+		return panelConfig;
+	}
+
+	/**
+	 * Returns the user of the account
+	 * 
+	 * @return Alumnos object
+	 */
+	public Alumnos getUser() {
+		return usuario;
+	}
+
+	/**
+	 * Returns the buttons used for navigation in the main view
+	 * 
+	 * @return Array of JButton (btnBack, btnFront)
+	 */
+	public JButton[] getMainPageButtons() {
+		JButton[] buttons = { btnBack, btnFront };
+		return buttons;
+	}
+
+	/**
+	 * Returns the buttons used to change from teachers to classes, classes to
+	 * teachers, and from any of those views to the active classes
+	 * 
+	 * @return Array of JButton (btnProfs, btnClases, btnClasesActivas)
+	 */
+	public JButton[] getMainSelButtons() {
+		JButton[] buttons = { btnProfs, btnClases, btnClasesActivas };
+		return buttons;
+	}
+
+	/**
+	 * Returns the text of the label in the teachers/classes view
+	 * 
+	 * @return String
+	 */
+	public String getMainLabel() {
+		return lblTitle.getText();
+	}
+
+	/**
+	 * Returns the text of the users configuration labels
+	 * 
+	 * @return Array of String (lblNombre, lblTlfn, lblContra)
+	 */
+	public String[] getConigLabels() {
+		String[] labels = { lblNombre.getText(), lblTlfn.getText(), lblContra.getText() };
+		return labels;
 	}
 
 }

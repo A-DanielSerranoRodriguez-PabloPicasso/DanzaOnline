@@ -637,6 +637,15 @@ public class LauncherView {
 	}
 
 	/**
+	 * Return the frame of the view
+	 * 
+	 * @return JFrame
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
 	 * Returns the panels of the application
 	 * 
 	 * @return Array of JPanel (loginPanel, registerPanel)
