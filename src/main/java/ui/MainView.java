@@ -434,25 +434,19 @@ public class MainView {
 
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				page--;
-				if (lblTitle.getText().equals("Profesores"))
-					mainTeachers();
-				else
-					mainClasses();
+				previousPage();
 			}
 		});
 
 		btnClassFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				page++;
-				userActualClasses();
+				nextClassPage();
 			}
 		});
 
 		btnClassBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				page--;
-				userActualClasses();
+				previousClassPage();
 			}
 		});
 
@@ -464,7 +458,6 @@ public class MainView {
 				panelTeachers.setVisible(true);
 				panelClasses.setVisible(false);
 				lblTitle.setText("Profesores");
-
 				mainTeachers();
 			}
 		});
@@ -519,7 +512,6 @@ public class MainView {
 
 		btnBorrarCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				utils.Almacen.alumnos.remove(usuario);
 				frame.dispose();
 				new LauncherView();
 			}
@@ -790,7 +782,7 @@ public class MainView {
 	}
 
 	/**
-	 * Increments the page counter and updates the text in the view
+	 * Increments the page counter and updates the text in the teachers/classes view
 	 */
 	public void nextPage() {
 		page++;
@@ -801,7 +793,7 @@ public class MainView {
 	}
 
 	/**
-	 * Decrements the page counter and updates the text in the view
+	 * Decrements the page counter and updates the text in the teachers/classes view
 	 */
 	public void previousPage() {
 		page--;
@@ -809,6 +801,29 @@ public class MainView {
 			mainTeachers();
 		else
 			mainClasses();
+	}
+
+	/**
+	 * Increments the page counter and updates the text in the own classes view
+	 */
+	public void nextClassPage() {
+		page++;
+		userActualClasses();
+	}
+
+	/**
+	 * Decrements the page counter and updates the text in the own classes view
+	 */
+	public void previousClassPage() {
+		page--;
+		userActualClasses();
+	}
+
+	/**
+	 * Deletes the user
+	 */
+	public void deleteUser() {
+		utils.Almacen.alumnos.remove(usuario);
 	}
 
 }
