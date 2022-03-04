@@ -853,6 +853,15 @@ public class MainView {
 	}
 
 	/**
+	 * Returns the actual page
+	 * 
+	 * @return Integer
+	 */
+	public int getPage() {
+		return page;
+	}
+
+	/**
 	 * Returns the buttons used for navigation in the main view
 	 * 
 	 * @return Array of JButton (btnBack, btnFront)

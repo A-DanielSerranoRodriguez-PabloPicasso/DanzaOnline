@@ -665,24 +665,40 @@ public class LauncherView {
 	}
 
 	/**
-	 * Return the login text-fields texts
+	 * Return the login text-field
 	 * 
-	 * @return Array of String (loginName, loginPasswd)
+	 * @return JTextField
 	 */
-	public String[] getLoginTexts() {
-		String[] texts = { txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()) };
+	public JTextField getLoginTextField() {
+		return txtLoginName;
+	}
+
+	/**
+	 * Return the login password-field
+	 * 
+	 * @return JPasswordField
+	 */
+	public JPasswordField getLoginPasswordField() {
+		return pwfLoginPasswd;
+	}
+
+	/**
+	 * Return the register text-fields
+	 * 
+	 * @return Array of JTextField (txtRegisterName, txtRegisterPhone)
+	 */
+	public JTextField[] getRegisterTextFields() {
+		JTextField[] texts = { txtRegisterName, txtRegisterPhone };
 		return texts;
 	}
 
 	/**
-	 * Return the register text-fields texts
+	 * Return the register password-fields
 	 * 
-	 * @return Array of String (registerName, registerPhone, registerPasswd,
-	 *         registerConfirmPasswd)
+	 * @return Array of JPasswordField (pwfRegisterPasswd, pwfRegisterConfPass)
 	 */
-	public String[] getRegisterTexts() {
-		String[] texts = { txtRegisterName.getText(), txtRegisterPhone.getText(),
-				new String(pwfRegisterPasswd.getPassword()), new String(pwfRegisterConfPass.getPassword()) };
-		return texts;
+	public JPasswordField[] getRegisterPasswordFields() {
+		JPasswordField[] passwd = { pwfRegisterPasswd, pwfRegisterConfPass };
+		return passwd;
 	}
 }
