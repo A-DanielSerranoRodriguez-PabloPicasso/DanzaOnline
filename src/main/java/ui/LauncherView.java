@@ -701,4 +701,11 @@ public class LauncherView {
 		JPasswordField[] passwd = { pwfRegisterPasswd, pwfRegisterConfPass };
 		return passwd;
 	}
+	
+	/**
+	 * Lets the user dispose of the frame
+	 */
+	public void dispose() {
+		frame.dispose();
+	}
 }

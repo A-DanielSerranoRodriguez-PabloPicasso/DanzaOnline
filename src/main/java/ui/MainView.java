@@ -901,4 +901,11 @@ public class MainView {
 		return labels;
 	}
 
+	/**
+	 * Lets the user dispose of the frame
+	 */
+	public void dispose() {
+		frame.dispose();
+	}
+
 }
