@@ -5,9 +5,16 @@ import models.Clases;
 import models.Profesores;
 import ui.LauncherView;
 
+/**
+ * Main class of the application
+ * 
+ * @author Daniel Serrano Rodríguez
+ *
+ */
 public class MainApp {
 
 	public static void main(String[] args) {
+		// Creates a variety of possible classes for the teachers
 		for (int i = 0; i < 22; i++) {
 			switch ((int) (Math.random() * 6)) {
 			case 0:
@@ -36,6 +43,7 @@ public class MainApp {
 			}
 		}
 
+		// Creates various teachers
 		utils.Almacen.profesores.add(new Profesores("Paco"));
 		utils.Almacen.profesores.add(new Profesores("Mario"));
 		utils.Almacen.profesores.add(new Profesores("Sara"));
@@ -43,14 +51,18 @@ public class MainApp {
 		utils.Almacen.profesores.add(new Profesores("Rodrigo"));
 		utils.Almacen.profesores.add(new Profesores("Vachenka"));
 
+		// Gets a random teacher and assigns a copy of a random class
 		for (int i = 0; i < 22; i++)
 			utils.Almacen.profesores.get((int) ((Math.random() * utils.Almacen.profesores.size()))).addClase(
 					utils.Almacen.clases.get((int) ((Math.random() * utils.Almacen.clases.size()))).copyClases());
 
+		// Takes all the classes assigned and puts them in another storage
 		utils.Almacen.rellenarClasesDisponibles();
-		
+
+		// Adds a testing student
 		utils.Almacen.alumnos.add(new Alumnos("d", "d", 123456789));
 
+		// Launches the GUI
 		new LauncherView();
 	}
 

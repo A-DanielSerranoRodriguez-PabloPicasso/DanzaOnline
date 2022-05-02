@@ -21,6 +21,12 @@ import javax.swing.JTextField;
 
 import models.Alumnos;
 
+/**
+ * First view of the GUI, that lets the user log in or register
+ * 
+ * @author Daniel Serrano Rodríguez
+ *
+ */
 public class LauncherView {
 	private int posi;
 
@@ -410,14 +416,22 @@ public class LauncherView {
 		registerPanel.add(vgRegister_3);
 	}
 
+	/**
+	 * Sets the behavior of the components when used
+	 */
 	private void setUIbehaviour() {
-		// LoginPanel
+		/**
+		 * Logs in the user
+		 */
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				login(txtLoginName.getText(), new String(pwfLoginPasswd.getPassword()));
 			}
 		});
 
+		/**
+		 * Logs in the user
+		 */
 		btnLogin.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -426,6 +440,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Logs in the user
+		 */
 		txtLoginName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -434,6 +451,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Logs in the user
+		 */
 		pwfLoginPasswd.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -442,13 +462,18 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Changes the view to the register panel
+		 */
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				enterRegister();
 			}
 		});
 
-		// RegisterPanel
+		/**
+		 * Registers the user
+		 */
 		btnRegisterConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				register(txtRegisterName.getText(), new String(pwfRegisterPasswd.getPassword()),
@@ -456,6 +481,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Registers the user
+		 */
 		btnRegisterConfirm.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -465,6 +493,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Registers the user
+		 */
 		txtRegisterName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -474,6 +505,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Registers the user
+		 */
 		txtRegisterPhone.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -483,6 +517,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Registers the user
+		 */
 		pwfRegisterPasswd.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -492,6 +529,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Registers the user
+		 */
 		pwfRegisterConfPass.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -501,6 +541,9 @@ public class LauncherView {
 			}
 		});
 
+		/**
+		 * Changes the view to the log in panel
+		 */
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				exitRegister();
@@ -701,7 +744,7 @@ public class LauncherView {
 		JPasswordField[] passwd = { pwfRegisterPasswd, pwfRegisterConfPass };
 		return passwd;
 	}
-	
+
 	/**
 	 * Lets the user dispose of the frame
 	 */

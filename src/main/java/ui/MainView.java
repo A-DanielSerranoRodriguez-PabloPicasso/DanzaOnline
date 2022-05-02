@@ -25,6 +25,12 @@ import models.Alumnos;
 import models.Clases;
 import models.Profesores;
 
+/**
+ * Main view of the classes available
+ * 
+ * @author Daniel Serrano Rodríguez
+ *
+ */
 public class MainView {
 	private Alumnos usuario;
 	private int page = 0;
@@ -122,6 +128,9 @@ public class MainView {
 		setUIbehaviour();
 	}
 
+	/**
+	 * Initializes the components of the frame
+	 */
 	private void setUIcomponents() {
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 
@@ -358,72 +367,108 @@ public class MainView {
 	}
 
 	private void setUIbehaviour() {
+		/**
+		 * Exits the view and takes the user back to the login
+		 */
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				exit();
 			}
 		});
 
+		/**
+		 * Adds 1 to the page counter, updating the contents
+		 */
 		btnFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nextPage();
 			}
 		});
 
+		/**
+		 * Subtracts 1 to the page counter, updating the contents
+		 */
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				previousPage();
 			}
 		});
 
+		/**
+		 * Adds 1 to the page counter, updating the contents
+		 */
 		btnClassFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nextClassPage();
 			}
 		});
 
+		/**
+		 * Subtracts 1 to the page counter, updating the contents
+		 */
 		btnClassBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				previousClassPage();
 			}
 		});
 
+		/**
+		 * Shows the teachers
+		 */
 		btnProfs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chngToProfs();
 			}
 		});
 
+		/**
+		 * Shows the classes
+		 */
 		btnClases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chngToClasses();
 			}
 		});
 
+		/**
+		 * Shows the users configuration view
+		 */
 		btnConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				goToConf();
 			}
 		});
 
+		/**
+		 * Exits the users configuration view
+		 */
 		btnReturnFromConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				returnFromConf();
 			}
 		});
 
+		/**
+		 * Shows the users classes in a different view
+		 */
 		btnClasesActivas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				goToActiveClasses();
 			}
 		});
 
+		/**
+		 * Exits the users classes view
+		 */
 		btnReturnFromClass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				returnFromActiveClasses();
 			}
 		});
 
+		/**
+		 * Deletes the user
+		 */
 		btnBorrarCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteUser();
@@ -437,6 +482,7 @@ public class MainView {
 	public void mainTeachers() {
 		panelTeachers.removeAll();
 
+		// Takes 4 teachers of the storage and puts the info
 		for (int i = page * 4; i < ((page + 1) * 4); i++) {
 			if (i < utils.Almacen.profesores.size()) {
 				Profesores prof = utils.Almacen.profesores.get(i);
@@ -492,31 +538,28 @@ public class MainView {
 				if (clase.isParticipando())
 					chkdynamic.setSelected(true);
 
+				/**
+				 * If the checkbox is checked, the class is added. If not, is removed
+				 */
 				chkdynamic.addItemListener(new ItemListener() {
-					// Regressed to previous version. TODO multiuser capabilities
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
-//							if (usuario.getClases().addClaseActual(clase.copyClases())) {
 							if (usuario.getClases().addClaseActual(clase)) {
 								clase.setParticipando(true);
-//								for (Clases c : usuario.getClases())
-//									if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
-//										c.setParticipando(true);
 							} else
 								chkdynamic.setSelected(false);
 						} else {// checkbox has been deselected
 							usuario.getClases().remove(clase);
-//							for (int i = 0; i < usuario.getClases().size(); i++)
-//								if (usuario.getClases().get(i).getNombre() == clase.getNombre()
-//										&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
-//									usuario.getClases().remove(i);
 							clase.setParticipando(false);
 						}
 						updateMainText();
 					}
 				});
 
+				/**
+				 * Activates the payment process
+				 */
 				btndynamic.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -525,7 +568,6 @@ public class MainView {
 						int option = JOptionPane.showOptionDialog(selTipoPago, "Como quieres pagar?",
 								"Estación de pago", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
 								null, pagos, pagos[2]);
-						// Possible TODO, separate information pages, not just straight up pay
 						switch (option) {
 						case 0:
 
@@ -581,25 +623,19 @@ public class MainView {
 				if (clase.isParticipando())
 					chkdynamic.setSelected(true);
 
+				/**
+				 * If the checkbox is checked, the class is added. If not, is removed
+				 */
 				chkdynamic.addItemListener(new ItemListener() {
-					// Regressed to previous version. TODO multiuser capabilities
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						if (e.getStateChange() == ItemEvent.SELECTED) {// checkbox has been selected
-//								if (usuario.getClases().addClaseActual(clase.copyClases())) {
 							if (usuario.getClases().addClaseActual(clase)) {
 								clase.setParticipando(true);
-//									for (Clases c : usuario.getClases())
-//										if (c.getNombre() == clase.getNombre() && c.getProfesor() == clase.getProfesor())
-//											c.setParticipando(true);
 							} else
 								chkdynamic.setSelected(false);
 						} else {// checkbox has been deselected
 							usuario.getClases().remove(clase);
-//								for (int i = 0; i < usuario.getClases().size(); i++)
-//									if (usuario.getClases().get(i).getNombre() == clase.getNombre()
-//											&& usuario.getClases().get(i).getProfesor() == clase.getProfesor())
-//										usuario.getClases().remove(i);
 							clase.setParticipando(false);
 						}
 						updateClassText();
